@@ -17,7 +17,7 @@ def preprocess(input_filename):
 
     dataset = clean(dataset)
     print(n_method(dataset, 5))
-
+    print(p_method(dataset, 5))
 
 if __name__ == "__main__":
     cli()
