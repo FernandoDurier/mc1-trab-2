@@ -33,14 +33,17 @@ def process(input_filename, gs_filename):
 
     y_true = correct(clean(gs), 3)
     
-
+    output = []
     for crowd_size in range(20, 81):
         p, r, f = metrics(dataset, y_true, crowd_size)
-        print(f"Crowd size = {crowd_size}")
-        print("Results for precision:", hypothesis_tests(p))
-        print("Results for recall:", hypothesis_tests(r))
-        print("Results for f1_score:", hypothesis_tests(f))
+        output.append([crowd_size, 'precision'] + hypothesis_tests(p).tolist())
+        output.append([crowd_size, 'recall'] + hypothesis_tests(r).tolist())
+        output.append([crowd_size, 'f_measure'] + hypothesis_tests(f).tolist())
 
+    with open('output.csv', 'w') as f:
+        writer = csv.writer(f, delimiter=';')
+        for line in output:
+            writer.writerow(line)
 
 if __name__ == "__main__":
     cli()
